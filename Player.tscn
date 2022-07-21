@@ -1,11 +1,37 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Sprites/frog.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/knightswingup.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Racoonhealth.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 30.5, 38.5 )
+extents = Vector2( 30, 34.5 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Health"
+length = 0.2
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+
+[sub_resource type="Animation" id=4]
+resource_name = "Test"
+length = 1.1
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.75 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 59, 1 )
@@ -21,12 +47,25 @@ position = Vector2( -2.5, -0.5 )
 shape = SubResource( 1 )
 
 [node name="Bloodknight" type="Sprite" parent="."]
-position = Vector2( 38, -39 )
-scale = Vector2( 0.3, 0.3 )
+position = Vector2( 35, -38.55 )
+scale = Vector2( 0.290625, 0.286914 )
 texture = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.544
 one_shot = true
+
+[node name="racoon" type="Sprite" parent="."]
+visible = false
+position = Vector2( 227, 49.5 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 4 )
+hframes = 3
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="racoon"]
+anims/Health = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+anims/Test = SubResource( 4 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
