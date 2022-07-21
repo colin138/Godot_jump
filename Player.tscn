@@ -23,3 +23,9 @@ shape = SubResource( 1 )
 [node name="Bloodknight" type="Sprite" parent="."]
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.544
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

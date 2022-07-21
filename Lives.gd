@@ -1,15 +1,15 @@
 extends CanvasLayer
 
-var coins = 0
+var lives = 3
 
 func _ready():
-	$Coins.text = String(coins)
+	$lives_left.text = String(lives)
 
 func _physics_process(delta):
-	if coins == 3:
+	if lives == 0:
 		get_tree().change_scene("res://Main.tscn")
 
 
-func _on_coin_collected():
-	coins = coins + 1
+func _on_Player_life_lost():
+	lives = lives - 1
 	_ready()

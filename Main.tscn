@@ -1,7 +1,8 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://MainTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://Sprites/bloodknight.png" type="Texture" id=3]
 [ext_resource path="res://pass_thru_tiles.tres" type="TileSet" id=4]
 [ext_resource path="res://background/set2_background.png" type="Texture" id=5]
 [ext_resource path="res://background/set2_tiles.png" type="Texture" id=6]
@@ -11,6 +12,7 @@
 [ext_resource path="res://Sprites/HUD/coin_gold.png" type="Texture" id=10]
 [ext_resource path="res://HUD.gd" type="Script" id=11]
 [ext_resource path="res://enemy.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Lives.gd" type="Script" id=13]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 160, 16 )
@@ -30,6 +32,14 @@ size = 35
 font_data = ExtResource( 9 )
 
 [sub_resource type="DynamicFont" id=5]
+size = 47
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 47
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=7]
 size = 47
 font_data = ExtResource( 9 )
 
@@ -63,24 +73,6 @@ collision_layer = 2
 collision_mask = 49
 format = 1
 tile_data = PoolIntArray( -1376254, -1073741820, 0, -720896, 2, 0, -720895, 2, 0, -655360, 2, 0, -655359, 2, 0, -655358, 2, 0, -655357, 2, 0, -655356, 2, 0, -655355, 2, 0, -655354, 2, 0, -655353, 2, 0, -655352, 2, 0, -655351, 2, 0, -655350, 2, 0, -655349, 2, 0, -655348, 2, 0, -655347, 2, 0, -655346, 2, 0, -589824, 2, 0, -524288, 2, 0, -458752, 2, 0, -393216, 2, 0, -327680, 2, 0, -262144, 2, 0, -196608, 2, 0, -131072, 2, 0, -65536, 2, 0, -65525, 5, 0, -65524, 6, 0, 0, 2, 0, 9, 4, 0, 65536, 2, 0, 131072, 2, 0, 131079, 4, 0, 131110, 4, 0, 196608, 2, 0, 196611, 0, 0, 196612, 3, 0, 262144, 2, 0, 262162, 1, 0, 262163, 1, 0, 262164, 1, 0, 262165, 1, 0, 262176, 4, 0, 327680, 2, 0, 327694, 1, 0, 327695, 1, 0, 327696, 1, 0, 327697, 1, 0, 327698, 2, 0, 327699, 2, 0, 327700, 2, 0, 327701, 2, 0, 393216, 2, 0, 393229, 1, 0, 393230, 2, 0, 393231, 2, 0, 393232, 2, 0, 393233, 2, 0, 393234, 2, 0, 393235, 2, 0, 393236, 2, 0, 393237, 2, 0, 458752, 1, 0, 458753, 1, 0, 458754, 1, 0, 458755, 1, 0, 458756, 1, 0, 458757, 1, 0, 458758, 1, 0, 458759, 1, 0, 458760, 1, 0, 458761, 1, 0, 458762, 1, 0, 458763, 1, 0, 458764, 1, 0, 458765, 2, 0, 458766, 2, 0, 458767, 2, 0, 458768, 2, 0, 458769, 2, 0, 458770, 2, 0, 458771, 2, 0, 458772, 2, 0, 458773, 2, 0, 524288, 2, 0, 524289, 2, 0, 524290, 2, 0, 524291, 2, 0, 524292, 2, 0, 524293, 2, 0, 524294, 2, 0, 524295, 2, 0, 524296, 2, 0, 524297, 2, 0, 524298, 2, 0, 524299, 2, 0, 524300, 2, 0, 524301, 2, 0, 524302, 2, 0, 524303, 2, 0, 524304, 2, 0, 524305, 2, 0, 524306, 2, 0, 524307, 2, 0, 524308, 2, 0, 524309, 2, 0, 524314, 0, 0, 524315, 1, 0, 524316, 1, 0, 524317, 1, 0, 524318, 1, 0, 524319, 1, 0, 524320, 1, 0, 524321, 1, 0, 524322, 1, 0, 524323, 1, 0, 524324, 1, 0, 524325, 1, 0, 524326, 1, 0, 524327, 1, 0, 524328, 1, 0, 524329, 1, 0, 524330, 1, 0, 524331, 3, 0, 589824, 2, 0, 589825, 2, 0, 589826, 2, 0, 589827, 2, 0, 589828, 2, 0, 589829, 2, 0, 589830, 2, 0, 589831, 2, 0, 589832, 2, 0, 589833, 2, 0, 589834, 2, 0, 589835, 2, 0, 589836, 2, 0, 589837, 2, 0, 589838, 2, 0, 589839, 2, 0, 589840, 2, 0, 589841, 2, 0, 589842, 2, 0, 589843, 2, 0, 589844, 2, 0, 589845, 2, 0, 589850, 2, 0, 589851, 2, 0, 589852, 2, 0, 589853, 2, 0, 589854, 2, 0, 589855, 2, 0, 589856, 2, 0, 589857, 2, 0, 589858, 2, 0, 589859, 2, 0, 589860, 2, 0, 589861, 2, 0, 589862, 2, 0, 589863, 2, 0, 589864, 2, 0, 589865, 2, 0, 589866, 2, 0, 589867, 2, 0, 655360, 2, 0, 655361, 2, 0, 655362, 2, 0, 655363, 2, 0, 655364, 2, 0, 655365, 2, 0, 655366, 2, 0, 655367, 2, 0, 655368, 2, 0, 655369, 2, 0, 655370, 2, 0, 655371, 2, 0, 655372, 2, 0, 655373, 2, 0, 655374, 2, 0, 655375, 2, 0, 655376, 2, 0, 655377, 2, 0, 655378, 2, 0, 655379, 2, 0, 655380, 2, 0, 655381, 2, 0, 655386, 2, 0, 655387, 2, 0, 655388, 2, 0, 655389, 2, 0, 655390, 2, 0, 655391, 2, 0, 655392, 2, 0, 655393, 2, 0, 655394, 2, 0, 655395, 2, 0, 655396, 2, 0, 655397, 2, 0, 655398, 2, 0, 655399, 2, 0, 655400, 2, 0, 655401, 2, 0, 655402, 2, 0, 655403, 2, 0, 720896, 2, 0, 720897, 2, 0, 720898, 2, 0, 720899, 2, 0, 720900, 2, 0, 720901, 2, 0, 720902, 2, 0, 720903, 2, 0, 720904, 2, 0, 720905, 2, 0, 720906, 2, 0, 720907, 2, 0, 720908, 2, 0, 720909, 2, 0, 720910, 2, 0, 720911, 2, 0, 720912, 2, 0, 720913, 2, 0, 720914, 2, 0, 720915, 2, 0, 720916, 2, 0, 720917, 2, 0 )
-
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 288, 416 )
-collision_layer = 9
-collision_mask = 31
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2( 1, 3 )
-current = true
-limit_left = 0
-limit_bottom = 750
-limit_smoothed = true
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = true
-drag_margin_left = 0.3
-drag_margin_right = 0.3
-editor_draw_limits = true
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 scale = Vector2( 5, 5 )
@@ -206,21 +198,23 @@ valign = 1
 [node name="coins" type="Node2D" parent="."]
 
 [node name="coin" parent="coins" instance=ExtResource( 8 )]
-position = Vector2( 480, 96 )
+position = Vector2( 372, 415 )
 
 [node name="coin2" parent="coins" instance=ExtResource( 8 )]
-position = Vector2( 608, -32 )
+position = Vector2( 2064, 240 )
 
 [node name="coin3" parent="coins" instance=ExtResource( 8 )]
-position = Vector2( 768, -96 )
+position = Vector2( 1152, -160 )
 
 [node name="enemies" type="Node2D" parent="."]
 
 [node name="enemy" parent="enemies" instance=ExtResource( 12 )]
 position = Vector2( 128, 352 )
+detects_cliffs = false
 
 [node name="enemy2" parent="enemies" instance=ExtResource( 12 )]
 position = Vector2( 1024, -16 )
+detects_cliffs = false
 
 [node name="enemy4" parent="enemies" instance=ExtResource( 12 )]
 position = Vector2( 1024, -176 )
@@ -234,7 +228,59 @@ direction = -1
 position = Vector2( 752, -96 )
 direction = -1
 
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 288, 416 )
+collision_layer = 9
+collision_mask = 31
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2( 1, 3 )
+current = true
+limit_left = 0
+limit_bottom = 750
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.3
+drag_margin_right = 0.3
+editor_draw_limits = true
+
+[node name="Lives" type="CanvasLayer" parent="."]
+script = ExtResource( 13 )
+
+[node name="Panel" type="Panel" parent="Lives"]
+modulate = Color( 0.0627451, 0.164706, 0.843137, 0.694118 )
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 208.0
+margin_bottom = 112.0
+
+[node name="TextureRect" type="TextureRect" parent="Lives"]
+margin_left = 72.0
+margin_top = 68.0
+margin_right = 112.0
+margin_bottom = 108.0
+rect_scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="Lives"]
+modulate = Color( 0.521569, 0.0509804, 0.733333, 1 )
+margin_left = 118.0
+margin_top = 62.0
+margin_right = 150.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 6 )
+text = "X"
+
+[node name="lives_left" type="Label" parent="Lives"]
+margin_left = 147.0
+margin_top = 62.0
+margin_right = 207.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 7 )
+text = "##"
+
 [connection signal="body_entered" from="Fallzone" to="Player" method="_on_Fallzone_body_entered"]
-[connection signal="coin_collectd" from="coins/coin" to="HUD" method="_on_coin_collectd"]
-[connection signal="coin_collectd" from="coins/coin2" to="HUD" method="_on_coin_collectd"]
-[connection signal="coin_collectd" from="coins/coin3" to="HUD" method="_on_coin_collectd"]
+[connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]
+[connection signal="life_lost" from="Player" to="Lives" method="_on_Player_life_lost"]
