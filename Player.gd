@@ -36,6 +36,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		vel.y -= jumpForce
+		$Sound_Jump.play()		
 		
 	vel.x = lerp(vel.x,0,0.2)
 

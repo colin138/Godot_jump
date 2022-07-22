@@ -1,4 +1,30 @@
-[gd_scene format=2]
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Sprites/more fonts/Sniglet-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Sprites/more fonts/KiriFont.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Sprites/fonts/BalsamiqSans-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Sprites/UI/grey_button04.png" type="Texture" id=4]
+[ext_resource path="res://PlayButton.gd" type="Script" id=5]
+[ext_resource path="res://Jump/music/Swinging Pants.ogg" type="AudioStream" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 70
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.215686, 0.0117647, 0.384314, 0.423529 )
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 3 )
 
 [node name="TitleMenu" type="Control"]
 anchor_right = 1.0
@@ -8,3 +34,60 @@ anchor_bottom = 1.0
 margin_right = 1024.0
 margin_bottom = 600.0
 color = Color( 0.0470588, 0.0156863, 0.560784, 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 175.0
+margin_top = 131.0
+margin_right = 842.0
+margin_bottom = 318.0
+custom_colors/font_color = Color( 0.133333, 0.733333, 0.941176, 1 )
+custom_colors/font_outline_modulate = Color( 0.870588, 0.937255, 0.0745098, 1 )
+custom_colors/font_color_shadow = Color( 0.890196, 0.0352941, 0.0352941, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Knight Jumper"
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 102.0
+margin_top = 362.0
+margin_right = 605.0
+margin_bottom = 560.0
+custom_styles/panel = SubResource( 2 )
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+margin_left = 26.0
+margin_top = 140.0
+margin_right = 175.0
+margin_bottom = 186.0
+texture = ExtResource( 4 )
+expand = true
+
+[node name="Label" type="Label" parent="Panel/TextureRect"]
+margin_left = 22.0
+margin_top = 3.0
+margin_right = 105.0
+margin_bottom = 41.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "Space"
+
+[node name="PlayButton" type="Button" parent="."]
+margin_left = 375.0
+margin_top = 250.0
+margin_right = 611.0
+margin_bottom = 324.0
+custom_colors/font_color_disabled = Color( 0.0941176, 0.776471, 0.231373, 1 )
+custom_colors/font_color_focus = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0.901961, 0.286275, 0.0745098, 1 )
+custom_colors/font_color_hover = Color( 0.105882, 0.388235, 0.611765, 1 )
+custom_colors/font_color_pressed = Color( 0.905882, 0.0509804, 0.0509804, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "Play"
+flat = true
+script = ExtResource( 5 )
+
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -12.0
+autoplay = true
+
+[connection signal="pressed" from="PlayButton" to="PlayButton" method="_on_PlayButton_pressed"]
