@@ -12,10 +12,12 @@ const speed : int = 230
 const RUNSPEED : int = 450
 const jumpForce : int = -1100
 const gravity : int = 35
+const FIREBALL = preload("res://fireball.tscn")
 
 var lives : int = 3
 
 var vel : Vector2 = Vector2(0,0)
+
 
 onready var sprite : Sprite = get_node("Bloodknight")
 
@@ -30,29 +32,29 @@ func _physics_process(delta):
 				continue
 							
 			if Input.is_action_pressed("move_left"):
-				vel.x = lerp(vel.x,-speed,-0.1) if vel.x > speed else lerp(vel.x,-speed,0.3)
+				vel.x = lerp(vel.x,-speed,0.1) if vel.x > speed else lerp(vel.x,-speed,0.3)
 				sprite.flip_h = true
 		
-			if Input.is_action_pressed("move_right"):
-				vel.x = lerp(vel.x,speed,0.1) if vel.x < speed else lerp(vel.x,speed,0.4)
+			elif Input.is_action_pressed("move_right"):
+				vel.x = lerp(vel.x,speed,0.1) if vel.x < speed else lerp(vel.x,speed,0.3)
 				sprite.flip_h = false
 			else:
 				vel.x = lerp(vel.x,0,0.2)
 			
 			move_and_fall()
-				
+			fire()
 		States.FLOOR:
 			if not is_on_floor():
 				state = States.AIR
 				
 			if Input.is_action_pressed("move_left"):
 				if Input.is_action_pressed("run"):
-					vel.x = lerp(vel.x,RUNSPEED,-0.1)
+					vel.x = lerp(vel.x, -RUNSPEED, 0.1)
 				else:
-					vel.x = lerp(vel.x,-speed,0.1)
+					vel.x = lerp(vel.x, -speed, 0.1)
 				sprite.flip_h = true
 		
-			if Input.is_action_pressed("move_right"):
+			elif Input.is_action_pressed("move_right"):
 				if Input.is_action_pressed("run"):
 					vel.x = lerp(vel.x,RUNSPEED,0.1)
 				else:
@@ -68,11 +70,20 @@ func _physics_process(delta):
 				state = States.AIR
 				
 			move_and_fall()
-			
+			fire()
 	
+func fire():
+	if Input.is_action_just_pressed("fireball"):
+		var direction = 1 if not sprite.flip_h else -1 
+		var f = FIREBALL.instance()
+		f.direction = direction
+		get_parent().add_child(f)
+		f.position.y = position.y
+		f.position.x = position.x + 25 * direction
 	
 func move_and_fall():
 	# gravity	
+	print(vel.x)
 	vel.y = vel.y + gravity
 	vel = move_and_slide(vel, Vector2.UP)
 	
