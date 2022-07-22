@@ -1,45 +1,72 @@
 extends KinematicBody2D
 
+enum States{AIR = 1, FLOOR, LADDER, WALL}
+var state = States.AIR
 
 signal life_lost
 signal coin_collected
 
 var score : int = 0
 var coins = 0
-var speed : int = 200
-var jumpForce : int = 650
-var gravity : int = 850
+const speed : int = 210
+const jumpForce : int = -1100
+const gravity : int = 35
 
 var lives : int = 3
 
-var vel : Vector2 = Vector2()
-
+var vel : Vector2 = Vector2(0,0)
 
 onready var sprite : Sprite = get_node("Bloodknight")
 
 func _physics_process(delta):	
+	
+	#print(state)
+	match state:
+		States.AIR:
+			
+			if is_on_floor():
+				state = States.FLOOR
+							
+			if Input.is_action_pressed("move_left"):
+				vel.x = -speed
+				sprite.flip_h = true
 		
+			if Input.is_action_pressed("move_right"):
+				vel.x = speed
+				sprite.flip_h = false
+			else:
+				vel.x = lerp(vel.x,0,0.2)
+			
+			move_and_fall()
+				
+		States.FLOOR:
+			if not is_on_floor():
+				state = States.AIR
+				
+			if Input.is_action_pressed("move_left"):
+				vel.x = -speed
+				sprite.flip_h = true
+		
+			if Input.is_action_pressed("move_right"):
+				vel.x = speed
+				sprite.flip_h = false
+			else:
+				vel.x = lerp(vel.x,0,0.2)
+			
+			if Input.is_action_just_pressed("jump") and is_on_floor():
+				vel.y = jumpForce
+				$Sound_Jump.play()
+				state = States.AIR
+				
+			move_and_fall()
+			
 	
 	
-	if Input.is_action_pressed("move_left"):
-		vel.x = -speed
-		sprite.flip_h = true
-		
-	if Input.is_action_pressed("move_right"):
-		vel.x = speed
-		sprite.flip_h = false
-		
+func move_and_fall():
+	# gravity	
+	vel.y = vel.y + gravity
 	vel = move_and_slide(vel, Vector2.UP)
 	
-	# gravity
-	vel.y += gravity * delta
-	
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		vel.y -= jumpForce
-		$Sound_Jump.play()		
-		
-	vel.x = lerp(vel.x,0,0.2)
-
 	
 
 func _on_Fallzone_body_entered(body):
@@ -47,7 +74,7 @@ func _on_Fallzone_body_entered(body):
 	
 
 func bounce():
-	vel.y -= jumpForce * 0.65
+	vel.y += jumpForce * 0.65
 	
 func add_coin():
 	coins = coins + 1
