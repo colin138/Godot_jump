@@ -283,9 +283,11 @@ custom_fonts/font = SubResource( 7 )
 text = "##"
 
 [node name="Level1_Music" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 378, 206 )
 stream = ExtResource( 14 )
 volume_db = -8.32
 autoplay = true
+max_distance = 50000.0
 
 [connection signal="body_entered" from="Fallzone" to="Player" method="_on_Fallzone_body_entered"]
 [connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]

@@ -8,7 +8,8 @@ signal coin_collected
 
 var score : int = 0
 var coins = 0
-const speed : int = 210
+const speed : int = 230
+const RUNSPEED : int = 450
 const jumpForce : int = -1100
 const gravity : int = 35
 
@@ -26,13 +27,14 @@ func _physics_process(delta):
 			
 			if is_on_floor():
 				state = States.FLOOR
+				continue
 							
 			if Input.is_action_pressed("move_left"):
-				vel.x = -speed
+				vel.x = lerp(vel.x,-speed,-0.1) if vel.x > speed else lerp(vel.x,-speed,0.3)
 				sprite.flip_h = true
 		
 			if Input.is_action_pressed("move_right"):
-				vel.x = speed
+				vel.x = lerp(vel.x,speed,0.1) if vel.x < speed else lerp(vel.x,speed,0.4)
 				sprite.flip_h = false
 			else:
 				vel.x = lerp(vel.x,0,0.2)
@@ -44,11 +46,18 @@ func _physics_process(delta):
 				state = States.AIR
 				
 			if Input.is_action_pressed("move_left"):
-				vel.x = -speed
+				if Input.is_action_pressed("run"):
+					vel.x = lerp(vel.x,RUNSPEED,-0.1)
+				else:
+					vel.x = lerp(vel.x,-speed,0.1)
 				sprite.flip_h = true
 		
 			if Input.is_action_pressed("move_right"):
-				vel.x = speed
+				if Input.is_action_pressed("run"):
+					vel.x = lerp(vel.x,RUNSPEED,0.1)
+				else:
+					vel.x = lerp(vel.x,speed,0.1)
+				
 				sprite.flip_h = false
 			else:
 				vel.x = lerp(vel.x,0,0.2)
@@ -97,8 +106,8 @@ func ouch(var posx):
 	elif position.x > posx:
 		vel.x = 800
 		
-	Input.action_release("move_left")
-	Input.action_release("move_right")
+	#Input.action_release("move_left")
+	#Input.action_release("move_right")
 	
 	$Timer.start()
 	
