@@ -54,7 +54,7 @@ func _on_top_checker_body_entered(body):
 	
 	
 func _on_sides_checker_body_entered(body):
-	print(body.get_collision_layer())
+	
 	if body.get_collision_layer() == 9:		
 		body.ouch(position.x)
 	elif body.get_collision_layer() == 32:
