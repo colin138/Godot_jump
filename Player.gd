@@ -32,11 +32,11 @@ func _physics_process(delta):
 				continue
 							
 			if Input.is_action_pressed("move_left"):
-				vel.x = lerp(vel.x,-speed,0.1) if vel.x > speed else lerp(vel.x,-speed,0.3)
+				vel.x = lerp(vel.x,-speed,0.1) if vel.x > speed else lerp(vel.x,-speed,0.03)
 				sprite.flip_h = true
 		
 			elif Input.is_action_pressed("move_right"):
-				vel.x = lerp(vel.x,speed,0.1) if vel.x < speed else lerp(vel.x,speed,0.3)
+				vel.x = lerp(vel.x,speed,0.1) if vel.x < speed else lerp(vel.x,speed,0.03)
 				sprite.flip_h = false
 			else:
 				vel.x = lerp(vel.x,0,0.2)
