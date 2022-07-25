@@ -9,6 +9,7 @@ signal coin_collected
 var score : int = 0
 var coins = 0
 var direction = 1
+var last_direction_jumped = 0
 const speed : int = 230
 const RUNSPEED : int = 450
 const jumpForce : int = -1100
@@ -24,12 +25,17 @@ onready var sprite : Sprite = get_node("Bloodknight")
 
 func _physics_process(delta):	
 	
-	print(is_near_wall())
+	print(vel.x)
 	match state:
 		States.AIR:
 			
 			if is_on_floor():
+				last_direction_jumped = 0
 				state = States.FLOOR
+				continue
+				
+			elif is_near_wall():
+				state = States.WALL
 				continue
 							
 			if Input.is_action_pressed("move_left"):
@@ -42,8 +48,10 @@ func _physics_process(delta):
 			else:
 				vel.x = lerp(vel.x,0,0.2)
 			
-			move_and_fall()
+			set_direction()
+			move_and_fall(false)
 			fire()
+			
 		States.FLOOR:
 			if not is_on_floor():
 				state = States.AIR
@@ -69,9 +77,32 @@ func _physics_process(delta):
 				vel.y = jumpForce
 				$Sound_Jump.play()
 				state = States.AIR
+				
 			set_direction()
-			move_and_fall()
+			move_and_fall(false)
 			fire()
+			
+		States.WALL:				
+						
+			if is_on_floor():
+				last_direction_jumped = 0
+				state = States.FLOOR
+				continue
+			elif not is_near_wall():
+				state = States.AIR
+				continue
+			
+			if direction != last_direction_jumped and Input.is_action_pressed("jump") and 	((Input.is_action_pressed("move_left") and direction == 1) or (Input.is_action_pressed("move_right") and direction == -1)):
+					last_direction_jumped = direction
+					vel.x = 450 * -direction
+					vel.y = jumpForce * 0.7
+					$Sound_Jump.play()
+					state = States.AIR					
+			
+			
+			move_and_fall(true)
+			
+	
 
 
 func set_direction():
@@ -83,17 +114,18 @@ func is_near_wall():
 	return $WallChecker.is_colliding()
 
 func fire():
-	if Input.is_action_just_pressed("fireball"):
-		
+	if Input.is_action_just_pressed("fireball") and not is_near_wall():
+		#direction = 1 if not sprite.flip_h else -1
 		var f = FIREBALL.instance()
 		f.direction = direction
 		get_parent().add_child(f)
 		f.position.y = position.y
 		f.position.x = position.x + 25 * direction
 	
-func move_and_fall():
-	# gravity	
-	
+func move_and_fall(slow_fall : bool):
+	# gravity
+	if slow_fall:
+		vel.y = clamp(vel.y, jumpForce, 175)	
 	vel.y = vel.y + gravity
 	vel = move_and_slide(vel, Vector2.UP)
 	

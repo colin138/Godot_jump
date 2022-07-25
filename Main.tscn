@@ -46,6 +46,13 @@ font_data = ExtResource( 9 )
 
 [node name="Main" type="Node2D"]
 
+[node name="Level1_Music" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 378, 206 )
+stream = ExtResource( 14 )
+volume_db = -8.32
+autoplay = true
+max_distance = 50000.0
+
 [node name="Tiles-oneway" type="TileMap" parent="."]
 tile_set = ExtResource( 4 )
 collision_layer = 2
@@ -233,13 +240,6 @@ direction = -1
 position = Vector2( 296, 353 )
 collision_layer = 9
 collision_mask = 31
-
-[node name="Level1_Music" type="AudioStreamPlayer2D" parent="Player"]
-position = Vector2( 82, -147 )
-stream = ExtResource( 14 )
-volume_db = -8.32
-autoplay = true
-max_distance = 50000.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( 1, 3 )
