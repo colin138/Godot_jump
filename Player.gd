@@ -8,6 +8,7 @@ signal coin_collected
 
 var score : int = 0
 var coins = 0
+var direction = 1
 const speed : int = 230
 const RUNSPEED : int = 450
 const jumpForce : int = -1100
@@ -23,7 +24,7 @@ onready var sprite : Sprite = get_node("Bloodknight")
 
 func _physics_process(delta):	
 	
-	#print(state)
+	print(is_near_wall())
 	match state:
 		States.AIR:
 			
@@ -68,13 +69,22 @@ func _physics_process(delta):
 				vel.y = jumpForce
 				$Sound_Jump.play()
 				state = States.AIR
-				
+			set_direction()
 			move_and_fall()
 			fire()
+
+
+func set_direction():
 	
+	direction = 1 if not sprite.flip_h else -1
+	$WallChecker.rotation_degrees = 90 * -direction
+
+func is_near_wall():
+	return $WallChecker.is_colliding()
+
 func fire():
 	if Input.is_action_just_pressed("fireball"):
-		var direction = 1 if not sprite.flip_h else -1 
+		
 		var f = FIREBALL.instance()
 		f.direction = direction
 		get_parent().add_child(f)
@@ -83,7 +93,7 @@ func fire():
 	
 func move_and_fall():
 	# gravity	
-	print(vel.x)
+	
 	vel.y = vel.y + gravity
 	vel = move_and_slide(vel, Vector2.UP)
 	
